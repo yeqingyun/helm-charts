@@ -101,14 +101,14 @@ config:
   # minio.signEndpoint is minio public network address
   object:
     enable: "minio"
-    apiURL: "https://openim1.server.top/api"
+    apiURL: "https://open-im.tuoluo.ltd/api"
     minio:
       bucket: "openim"
-      endpoint: "http://im-minio:9000"
+      endpoint: "https://minio-api.tuoluo.ltd"
       accessKeyID: "root"
       secretAccessKey: "openIM123"
       sessionToken: ''
-      signEndpoint: "https://openim1.server.top/im-minio-api"
+      signEndpoint: "https://open-im.tuoluo.ltd/im-minio-api"
       publicRead: false
     cos:
       bucketURL: https://temp-1252357374.cos.ap-chengdu.myqcloud.com

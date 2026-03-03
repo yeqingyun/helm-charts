@@ -11,20 +11,25 @@ image:
   pullPolicy: Always
   tag: "release-v3.6"
 ingress:
-  enabled: true
-  className: "nginx"
-  annotations:
-    nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  enabled: false
+  # apiVersion: extensions/v1beta1
+  apiVersion: networking.k8s.io/v1
+  annotations: { }
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+    # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
+    # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
+    # ingressClassName: nginx
+  ingressClassName: "nginx"
   hosts:
-    - host: openim1.server.top # your hostname
-      paths:
-        - path: /api(/|$)(.*)
-          pathType: ImplementationSpecific
-  tls:
-    - secretName: webapitls  #your hostname tls
-      hosts:
-        - openim1.server.top
+    - host: example.com
+      #paths: [ ]
+
+  tls: [ ]
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
 
 openim-msggateway-proxy:
   image:
@@ -38,14 +43,14 @@ openim-msggateway-proxy:
       nginx.ingress.kubernetes.io/use-regex: "true"
       nginx.ingress.kubernetes.io/rewrite-target: /$2
     hosts:
-      - host: openim1.server.top # your hostname
+      - host: open-im.tuoluo.ltd # your hostname
         paths:
           - path: /msg_gateway(/|$)(.*)
             pathType: ImplementationSpecific
     tls:
-      - secretName: webapitls  #your hostname tls
+      - secretName: openimwebapitls  #your hostname tls
         hosts:
-          - openim1.server.top
+          - open-im.tuoluo.ltd
 
 openim-msggateway:
   image:

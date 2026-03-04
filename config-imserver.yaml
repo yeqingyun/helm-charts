@@ -41,9 +41,9 @@ config:
   #
   # Username is required only for Redis version 6.0+
   redis:
-    address: [ im-redis-master:6379 ]
+    address: [ redis.tuoluo.ltd:6379 ]
     username: ''
-    password: openIM123
+    password: redis_jXxJzw
 
   ###################### Kafka configuration information ######################
   # Kafka configuration
@@ -55,7 +55,7 @@ config:
   kafka:
     username: 'root'
     password: 'proot'
-    addr: [ im-kafka:9092 ]
+    addr: [ kafka.tuoluo.ltd:9092 ]
     latestMsgToRedis:
       topic: "latestMsgToRedis"
     offlineMsgToMongo:

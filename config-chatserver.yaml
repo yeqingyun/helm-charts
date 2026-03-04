@@ -88,9 +88,9 @@ config:
   openIMUrl: "http://openimserver-openim-api"
 
   redis:
-    address: [ im-redis-master:6379 ]
+    address: [ redis.tuoluo.ltd:6379 ]
     username:
-    password: openIM123
+    password: redis_jXxJzw
 
   liveKit:
     liveKitUrl: "wss://im-livekiturl:7880" # 使用wss://代替ws://以启用加密连接

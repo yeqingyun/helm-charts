@@ -45,7 +45,7 @@ config:
     username: ''
     password: redis_jXxJzw
 
-  ###################### Kafka configuration information ######################
+  ######################  configuration information ######################
   # Kafka configuration
   #
   # Kafka username
@@ -53,8 +53,8 @@ config:
   # It's not recommended to modify this topic name
   # Consumer group ID, it's not recommended to modify
   kafka:
-    username: 'admin'
-    password: 'admin'
+    username: ''
+    password: ''
     addr: [ kafka.tuoluo.ltd:9092 ]
     latestMsgToRedis:
       topic: "latestMsgToRedis"

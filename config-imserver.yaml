@@ -53,8 +53,8 @@ config:
   # It's not recommended to modify this topic name
   # Consumer group ID, it's not recommended to modify
   kafka:
-    username: 'root'
-    password: 'proot'
+    username: 'admin'
+    password: 'admin'
     addr: [ kafka.tuoluo.ltd:9092 ]
     latestMsgToRedis:
       topic: "latestMsgToRedis"

@@ -231,8 +231,8 @@ config:
   # Built-in app manager user IDs
   # Built-in app manager nicknames
   manager:
-    userID:
-    nickname:
+    userID: [ "imAdmin" ]
+    nickname: [ "imAdmin" ]
 
   im-admin:
     userID: [ "imAdmin" ]

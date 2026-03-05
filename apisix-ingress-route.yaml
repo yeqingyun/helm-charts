@@ -1,0 +1,99 @@
+apiVersion: apisix.apache.org/v2
+kind: ApisixRoute
+metadata:
+  name: openim-front-route
+  namespace: openim
+spec:
+  ingressClassName: apisix
+  http:
+    - name: front-path-rewrite
+      match:
+        hosts:
+          - open-im.tuoluo.ltd
+        paths:
+          - "/openim-front/**"  # 修改为支持多级路径匹配的正确语法
+      backends:
+        - serviceName: openim-web
+          servicePort: 80
+          weight: 100           # 添加权重字段（默认值）
+      plugins:
+        - name: proxy-rewrite
+          config:
+            regex_uri: ^/openim-front/(.*)  # 修正正则表达式语法
+            replace: /$1                  # 使用replace参数替代数组写法
+    - name: msg-gateway-route
+      match:
+        hosts:
+          - open-im.tuoluo.ltd
+        paths:
+          - /msg_gateway*
+      plugins:
+        - name: proxy-rewrite
+          enable: true
+          config:
+            regex_uri: ["^/msg_gateway/?(.*)", "/$1"]
+      backends:
+        - serviceName: openimserver-openim-msggateway-proxy
+          servicePort: 80 # 请根据实际 Service 端口修改
+    - name: chat-rewrite
+      match:
+        hosts:
+          - open-im.tuoluo.ltd
+        paths:
+          - /chat*
+      plugins:
+        - name: proxy-rewrite
+          enable: true
+          config:
+            # 模拟 nginx 的 /$2，去除 /chat 前缀
+            regex_uri: ["^/chat/?(.*)", "/$1"]
+      backends:
+        - serviceName: openimchat-chat-api # 确保与你的 Service 名称一致
+          servicePort: 80          # 确保与你的 Service 端口一致
+    - name: chat-admin-path-rewrite
+      match:
+        hosts:
+          - open-im.tuoluo.ltd
+        paths:
+          - /complete_admin*
+      plugins:
+        - name: proxy-rewrite
+          enable: true
+          config:
+            # 对应 nginx 的 rewrite-target: /$2
+            # 将 /complete_admin/login 重写为 /login 转发
+            regex_uri: ["^/complete_admin/?(.*)", "/$1"]
+      backends:
+        - serviceName: openimchat-admin-api # 请根据实际 Service 名称修改
+          servicePort: 80           # 请根据实际 Service 端口修改
+    - name: api-path-rewrite
+      match:
+        hosts:
+          - open-im.tuoluo.ltd
+        paths:
+          - /api*
+      plugins:
+        - name: proxy-rewrite
+          enable: true
+          config:
+            # 对应 nginx 的 /$2，将 /api/login 重写为 /login
+            regex_uri: ["^/api/?(.*)", "/$1"]
+      backends:
+        - serviceName: openimserver-openim-api # 请替换为你实际的 Service 名称
+          servicePort: 80         # 请替换为你实际的 Service 端口号
+    - name: admin-front-rewrite
+      match:
+        hosts:
+          - open-im.tuoluo.ltd
+        paths:
+          - /openim-admin-front*
+      plugins:
+        - name: proxy-rewrite
+          enable: true
+          config:
+            # 对应 nginx 的 rewrite-target: /$2
+            # 将 /openim-admin-front/dashboard 重写为 /dashboard
+            regex_uri: ["^/openim-admin-front/?(.*)", "/$1"]
+      backends:
+        - serviceName: openim-admin # 对应管理端前端 Service 名称
+          servicePort: 80                # 对应管理端前端 Service 端口

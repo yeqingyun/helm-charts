@@ -11,16 +11,15 @@ spec:
         hosts:
           - open-im.tuoluo.ltd
         paths:
-          - "/openim-front/**"  # 修改为支持多级路径匹配的正确语法
+          - /openim-front*  # 修改为支持多级路径匹配的正确语法
       backends:
         - serviceName: openim-web
           servicePort: 80
-          weight: 100           # 添加权重字段（默认值）
       plugins:
         - name: proxy-rewrite
+          enable: true
           config:
-            regex_uri: ^/openim-front/(.*)  # 修正正则表达式语法
-            replace: /$1                  # 使用replace参数替代数组写法
+            regex_uri: ["^/openim-front/?(.*)", "/$1"]
     - name: msg-gateway-route
       match:
         hosts:

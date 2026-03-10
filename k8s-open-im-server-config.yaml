@@ -7,9 +7,9 @@ global:
 #Currently, only the configuration with ingressName as nginx is provided.
 #If it is another gateway such as istio or treafik, please modify the corresponding gateway requirements
 image:
-  repository: registry.cn-hangzhou.aliyuncs.com/openimsdk/openim-api
+  repository: m.daocloud.io/docker.io/openim/openim-api:
   pullPolicy: Always
-  tag: "release-v3.6"
+  tag: "v3.8.3-patch"
 ingress:
   enabled: true
   className: "nginx"

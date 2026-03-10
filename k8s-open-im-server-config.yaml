@@ -29,8 +29,8 @@ ingress:
 
 openim-msggateway-proxy:
   image:
-    repository: registry.cn-hangzhou.aliyuncs.com/openimsdk/openim-msggateway-proxy
-    tag: "v3.5.0"
+    repository: m.daocloud.io/docker.io/openim-msggateway:
+    tag: "v3.8.3-patch"
     pullPolicy: Always
   ingress:
     enabled: true
